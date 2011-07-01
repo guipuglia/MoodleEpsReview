@@ -2,6 +2,7 @@ import Login
 import Parser
 import Student
 
+
 if __name__ == '__main__':
 	x = Login.Login('7259186', 'senha1')
 	x.connect('username', 'password')
