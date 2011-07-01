@@ -24,20 +24,15 @@ class Parser:
         for row in rows:
             tdName = row.find('td', {'class': 'cell c1 fullname'})
             name = strip_accents(tdName.find('a').contents[0])
-#            print strip_accents(name) 
+            
             tdFile = row.find('td', {'class': 'cell c4 timemodified'})
             if tdFile.find('a') is not None:
                 fileLink = tdFile.find('a')['href']
-#                print fileLink
             else:
                 fileLink = ''
-#                print "Nao tem arquivo"
+            
             tdStatus = row.find('td', {'class': 'cell c6 status'})
             statusLink = tdStatus.find('a')['href']
-#            print statusLink
-#            print "---------------------"
 
-            if fileLink != '':
-                res.append(Student.Student(name, fileLink, statusLink))
-
+            res.append(Student.Student(name, fileLink, statusLink))
         return res

@@ -4,7 +4,6 @@ class Login:
     def __init__(self, user, password):
         self.user = user
         self.password = password
-        print "Setted: %s %s" % (self.user, self.password)
         self.cookieJar = cookielib.CookieJar()
         self.opener = urllib2.build_opener(
                 urllib2.HTTPCookieProcessor(self.cookieJar))
@@ -15,9 +14,17 @@ class Login:
 
         self.opener.open('http://paca.ime.usp.br/login/index.php', 
                 self.loginData)
+        self.opener.close()
         print "Connection Ok"
 
     def open(self, url):
         self.response = self.opener.open(url)
-        self.document = self.response.read()
-        return self.document
+        self.data = self.response.read()
+        self.response.close()
+        return self.data
+
+    def sendData(self, url, data):
+        self.request = urllib2.Request(url, data);
+        self.response = self.opener.open(self.request)
+        self.data = self.response.read()
+        return self.data
