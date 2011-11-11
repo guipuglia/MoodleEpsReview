@@ -60,3 +60,28 @@ class Student:
 
         inputData = urllib.urlencode(params)
         resp = login.sendData(subPage, inputData)
+
+    def copyFile(self, fromPath, basePath, fileName):
+        path = basePath + self.name.replace(' ', '_') + '/' + fileName
+        os.system('cp %s %s' % (fromPath, path))
+
+    def reviewEntregou(self, login, subPage, nota, comments):
+        page = login.open(self.gradeLink)
+        soup = BeautifulSoup.BeautifulSoup(page)
+        #all inputs
+        inputs = soup.findAll('input')
+        params = {}
+        
+        for i in inputs:
+            if i['type'] == 'hidden' and i.has_key('name'):
+                params[i['name']] = i['value']
+
+        params['xgrade'] = str(nota)
+        params['submissioncomment_editor[text]'] = comments
+
+#        print params
+
+        inputData = urllib.urlencode(params)
+        resp = login.sendData(subPage, inputData)
+
+
